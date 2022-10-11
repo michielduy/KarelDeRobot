@@ -1,0 +1,163 @@
+function main() {
+
+  maakGebouwen();
+  keerTerugNaarNul();
+  while (frontIsClear()) {
+    zetVogelsUit();
+  }
+  zetVogelsUit();
+  keerTerugNaarNul();
+  gaNaarLinksBoven();
+  clearAllBirds();
+
+}
+
+function clearAllBirds(){
+      while(rightIsClear()){
+      VerzamelVogels();
+      volgendeRij();
+      }
+      VerzamelVogels();
+      
+   }
+
+function lookToTheWest(){
+   
+      while(!facingWest()){turnLeft();}
+   }
+
+
+
+
+function volgendeRij(){
+   
+      turnAround();
+      moveWhileClear();
+      turnLeft();
+      if(frontIsClear()){move();}
+      turnLeft();
+      
+   }
+
+function ZetAlleVogelsNeer(){
+   
+      while(beepersInBag()){putBeeper();paintCorner("red");}
+      
+   }
+
+function VerzamelVogels(){
+   
+   while(frontIsClear()){
+   while(beepersPresent()&& cornerColorIs("blue")){pickBeeper();}
+   move();
+   if(cornerColorIs("yellow")&&beepersInBag()){
+      
+         turnAround();
+         while(cornerColorIs("yellow")){move();}
+         ZetAlleVogelsNeer();
+         turnAround();
+         
+      }
+   }
+   ZetAlleVogelsNeer();
+   if(beepersPresent()&& cornerColorIs("red")){paintCorner("red");}
+   }
+
+
+
+function gaNaarLinksBoven() {
+  turnLeft();
+  moveWhileClear();
+  turnRight();
+}
+
+function plaatsVogel() {
+
+  putBeeper();
+  paintCorner('blue');
+
+  while (frontIsClear()) {
+    if(frontIsClear()){move();}
+    while(random(0.1)){
+       plaatsVogel();       
+       } 
+  }
+
+}
+
+function zetVogelsUit() {
+
+  turnLeft();
+  while (beepersPresent()) {
+    move();
+  }
+  while (frontIsClear()) {
+    plaatsVogel();
+  }
+  keerTerug();
+  if (frontIsClear()) {
+    move();
+  }
+
+}
+
+function keerTerugNaarNul() {
+
+  while (!facingSouth()) {
+    turnLeft();
+  }
+  moveWhileClear();
+  while (!facingWest()) {
+    turnLeft();
+  }
+  moveWhileClear();
+  turnAround();
+
+}
+
+function maakGebouwen() {
+  while (frontIsClear()) {
+    ZetEenGebouw();
+    keerTerug();
+    //hoe kleiner de random hoe meer gebouwen
+    while (random(0.45) && frontIsClear()) {
+      move();
+    }
+  }
+  ZetEenGebouw();
+  keerTerug();
+}
+
+function ZetEenGebouw() {
+
+  turnLeft();
+  //hoe hoger de random hoe hoger de gebouwen
+  while (random(0.4) && frontIsClear()) {
+    if (!beepersPresent()) {
+      putBeeper();
+      paintCorner('yellow');
+    }
+    move();
+  }
+  if (!beepersPresent()) {
+    putBeeper();
+    paintCorner('yellow');
+  }
+}
+
+//keer terug naar onder en zet uw klaar voor de volgende cyclus
+
+function keerTerug() {
+  turnAround();
+  moveWhileClear();
+  turnLeft();
+
+}
+
+function moveWhileClear() {
+
+  while (frontIsClear()) {
+    move();
+  }
+
+}
